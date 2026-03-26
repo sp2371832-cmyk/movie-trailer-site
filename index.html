@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trailer Hub</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f0f0f;
+  color: white;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: #141414;
+  padding: 10px 20px;
+}
+
+header h1 {
+  color: red;
+}
+
+/* SEARCH */
+#searchInput {
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  margin: 5px;
+}
+
+/* NAV */
+nav button {
+  margin: 5px;
+  padding: 8px 12px;
+  background: red;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+nav button:hover {
+  background: darkred;
+}
+
+/* GRID */
+.container {
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+/* CARD */
+.card {
+  background: #1c1c1c;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  width: 100%;
+}
+
+.card-content {
+  padding: 10px;
+}
+
+.watch {
+  width: 100%;
+  padding: 8px;
+  background: red;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* DETAIL PAGE */
+#movieDetail {
+  display: none;
+  padding: 20px;
+}
+
+iframe {
+  width: 100%;
+  height: 300px;
+}
+
+.link-btn {
+  display: inline-block;
+  margin: 10px 5px;
+  padding: 10px;
+  background: red;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🎬 Trailer Hub</h1>
+
+  <input type="text" id="searchInput" placeholder="Search movie..."
+         onkeyup="searchMovies()">
+
+  <nav>
+    <button onclick="filterMovies('all')">All</button>
+    <button onclick="filterMovies('new')">New</button>
+    <button onclick="filterMovies('old')">Old</button>
+  </nav>
+</header>
+
+<div class="container">
+  <h2>🔥 Movies</h2>
+
+  <div class="grid">
+
+    <!-- NEW MOVIE -->
+    <div class="card new">
+      <img src="https://via.placeholder.com/300x400">
+      <div class="card-content">
+        <h3>Pushpa 2</h3>
+        <button class="watch" onclick="showMovie('pushpa')">Watch Trailer</button>
+      </div>
+    </div>
+
+    <!-- OLD MOVIE -->
+    <div class="card old">
+      <img src="https://via.placeholder.com/300x400">
+      <div class="card-content">
+        <h3>KGF 1</h3>
+        <button class="watch" onclick="showMovie('kgf')">Watch Trailer</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MOVIE DETAIL -->
+<div id="movieDetail">
+
+  <h2 id="title"></h2>
+
+  <iframe id="trailer" src="" allowfullscreen></iframe>
+
+  <p id="desc"></p>
+  <p id="date"></p>
+  <p id="rating"></p>
+
+  <a href="https://www.netflix.com" target="_blank" class="link-btn">Netflix</a>
+  <a href="https://www.primevideo.com" target="_blank" class="link-btn">Amazon</a>
+
+  <br><br>
+  <button onclick="goBack()">⬅ Back</button>
+
+</div>
+
+<script>
+
+/* MOVIE DATA */
+const movies = {
+  pushpa: {
+    title: "Pushpa 2",
+    trailer: "https://www.youtube.com/embed/Q1NKMPhP8PY",
+    desc: "Action packed movie",
+    date: "2025",
+    rating: "⭐ 4.5"
+  },
+  kgf: {
+    title: "KGF 1",
+    trailer: "https://www.youtube.com/embed/-KfsY-qwBS0",
+    desc: "Rocky story",
+    date: "2018",
+    rating: "⭐ 4.7"
+  }
+};
+
+/* SHOW MOVIE */
+function showMovie(key) {
+  let movie = movies[key];
+
+  document.getElementById("title").innerText = movie.title;
+  document.getElementById("trailer").src = movie.trailer;
+  document.getElementById("desc").innerText = "Description: " + movie.desc;
+  document.getElementById("date").innerText = "Release: " + movie.date;
+  document.getElementById("rating").innerText = "Rating: " + movie.rating;
+
+  document.querySelector(".container").style.display = "none";
+  document.getElementById("movieDetail").style.display = "block";
+}
+
+/* BACK */
+function goBack() {
+  document.querySelector(".container").style.display = "block";
+  document.getElementById("movieDetail").style.display = "none";
+}
+
+/* FILTER */
+function filterMovies(type) {
+  let cards = document.querySelectorAll(".card");
+
+  cards.forEach(card => {
+    if (type === "all") {
+      card.style.display = "block";
+    } else if (card.classList.contains(type)) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+/* SEARCH */
+function searchMovies() {
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let cards = document.querySelectorAll(".card");
+
+  cards.forEach(card => {
+    let title = card.innerText.toLowerCase();
+
+    if (title.includes(input)) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+</script>
+
+</body>
+</html>
