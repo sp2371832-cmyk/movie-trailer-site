@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trailer Hub</title>
+<title>FlixCast</title>
 
 <style>
 body {
@@ -23,8 +23,10 @@ header {
   padding: 10px 20px;
 }
 
-header h1 {
-  color: red;
+/* LOGO */
+.logo {
+  font-size: 28px;
+  font-weight: bold;
 }
 
 /* SEARCH */
@@ -117,7 +119,12 @@ iframe {
 <body>
 
 <header>
-  <h1>🎬 Trailer Hub</h1>
+
+  <!-- FLIXCAST LOGO -->
+  <div class="logo">
+    <span style="color:white;">Flix</span>
+    <span style="color:red;">Cast</span>
+  </div>
 
   <input type="text" id="searchInput" placeholder="Search movie..."
          onkeyup="searchMovies()">
@@ -127,6 +134,7 @@ iframe {
     <button onclick="filterMovies('new')">New</button>
     <button onclick="filterMovies('old')">Old</button>
   </nav>
+
 </header>
 
 <div class="container">
@@ -212,6 +220,7 @@ function showMovie(key) {
 function goBack() {
   document.querySelector(".container").style.display = "block";
   document.getElementById("movieDetail").style.display = "none";
+  document.getElementById("trailer").src = "";
 }
 
 /* FILTER */
